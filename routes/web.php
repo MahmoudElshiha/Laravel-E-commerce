@@ -47,25 +47,24 @@ Route::post('/products', function () {
 
     return redirect('/products');
 });
-Route::get('/products/{id}', function ($id) {
+Route::get('/products/{product}', function (Product $product) {
     return view('products.show', [
-        'product' => Product::find($id)
+        'product' => $product
     ]);
 });
 
-Route::get('/products/{id}/edit', function ($id) {
+Route::get('/products/{product}/edit', function (Product $product) {
     return view('products.edit', [
-        'product' => Product::find($id)
+        'product' => $product
     ]);
 });
 
-Route::patch('/products/{id}', function ($id) {
+Route::patch('/products/{product}', function (Product $product) {
     request()->validate([
         'name' => 'required|min:3|max:255',
         'price' => 'required|numeric',
     ]);
 
-    $product = Product::find($id);
     $product->update([
         'name' => request('name'),
         'price' => request('price'),
