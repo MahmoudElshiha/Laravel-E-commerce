@@ -17,16 +17,17 @@ class User extends Authenticatable
         return $this->hasMany(Order::class);
     }
 
+    public function vendor()
+    {
+        return $this->hasOne(Vendor::class);
+    }
+
     /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for serialization.

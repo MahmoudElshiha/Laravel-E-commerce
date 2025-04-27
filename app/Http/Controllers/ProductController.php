@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -37,7 +37,7 @@ class ProductController extends Controller
             'name' => request('name'),
             'price' => request('price'),
             'image' => $image,
-            'vendor_id' => 1
+            'vendor_id' => Auth::user()->vendor->id,
         ]);
 
         return redirect('/products');
