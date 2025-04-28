@@ -7,7 +7,6 @@ use \App\Http\Controllers\RegisterController;
 use \App\Http\Controllers\SessionController;
 
 
-
 // home route
 Route::get('/', function () {
     return view('home', [
@@ -23,7 +22,6 @@ Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/create', [ProductController::class, 'create'])->middleware('auth');
 
 Route::get('/products/{product}', [ProductController::class, 'show']);
-
 Route::post('/products', [ProductController::class, 'store'])->middleware('auth');
 
 Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->middleware('auth')->can('edit-product', 'product');

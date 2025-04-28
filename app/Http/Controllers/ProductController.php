@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\mail;
+use App\Mail\ProductUpdated;
 
 class ProductController extends Controller
 {
@@ -31,14 +33,16 @@ class ProductController extends Controller
             "https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-04-image-card-03.jpg",
             "https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-04-image-card-04.jpg",
         ];
+
         $image = fake()->randomElement($images);
 
-        Product::create([
+        $product = Product::create([
             'name' => request('name'),
             'price' => request('price'),
             'image' => $image,
             'vendor_id' => Auth::user()->vendor->id,
         ]);
+
 
         return redirect('/products');
     }
@@ -66,6 +70,9 @@ class ProductController extends Controller
             'name' => request('name'),
             'price' => request('price'),
         ]);
+
+        // send mail
+        Mail::to(Auth::user()->email)->queue(new ProductUpdated($product));
 
         return redirect('/products/' . $product->id);
     }
